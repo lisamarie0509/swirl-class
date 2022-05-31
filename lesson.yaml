@@ -1,0 +1,143 @@
+- Class: meta
+  Course: tidy data with Lisa
+  Lesson: Lisa's swirl class
+  Author: Lisa Marie Klasen
+  Type: Standard
+  Organization: HS Fresenius
+  Version: 2.4.5
+
+- Class: text
+  Output: Hello and welcome to the data side of life :-) 
+  
+- Class: text
+  Output: Why care about data anyway you might wonder? Well, they not only give you important stats but also insights. In our case we will have a look at a real life example - customer data from a german online shop! The best way to show you, how data can be used in business situations.
+  
+- Class: text
+  Output: Let's start with a basic introdcution. You should always keep in mind - in this course as well as in life!
+- Class: text
+  Output: 1. Nobody is perfect. Be patient and do not get dismantled when you do not get everything right the first time around. There are hints for every exercise you might struggle with. But, please make sure to type every command or function into the script, not the console.
+- Class: text
+  Output: 2. Practice makes perfect - This is also my first swirl class so please be generous with me! And don't hesitate to give me feedback on any matters!
+  
+- Class: text
+  Output: The swirl class was especially designed for students of R, who are interested in how R can be used for information or data processing. 
+#Talk more about aim. 
+
+- Class: text
+  Output: Nothing that Excel could not do, you think? I thought the same, but was proven wrong. 
+
+
+- Class: text
+  Output: First we will import data direclty as an .xlsx document to show you how it is done. But to import data, you first have to posess it.
+  
+- Class: text 
+  Output: You might already be familiar with github, which give you acess to a great world of data.
+
+#Download data from github
+
+- Class: text 
+  Output: Let's get started with downloading the customer data from a german online shop, available on github. 
+  
+- Class: text 
+  Output: Please download the file Customer data.xlsx and save it in your working directory. If you do not have a working directory set, please first use the function setwd() to define your working directory. You can also use ?setwd to receive more information.
+  
+- Class: video
+  Output: Type Yes to open the link and download the data. Please do not change the file name, as this is relevant for the further swirl class.
+  VideoLink: https://github.com/lisamarie0509/swirl-class/blob/main/Customer%20data.xlsx
+  
+- Class: text 
+  Output: Great job! You should now have downloaded the relevant data for our swirl course. But...we are not done yet. To import the data from an .xlsx document into R, we first have to install some packages that are required for doing so. 
+
+#Install and run package: 
+
+- Class: cmd_question
+  Output: Please use a function to install the package readxl.
+  CorrectAnswer: install.packages('readxl')
+  AnswerTests: omnitest('install.packages("readxl")')
+  Hint: Just use install.packages('readxl') and press enter.
+
+- Class: text
+  Output: After the download, the package has to be run. Copy library('readxl') into your script and press enter.
+
+- Class: video
+  Output: There is also an easier way to install packages in R. Just open the packages tab and search for the package you want to install. In this case readxl. Check the box and voila - the package is installed and run automatically. You can also type ?install.packages into the script to get to the help section. If you still need further input, you can also have a look at the following video. If you feel comfortable, just type No to resume the class. 
+  VideoLink: https://www.youtube.com/watch?v=u1r5XTqrCTQ 
+  
+- Class: text
+  Output: To now use the data you have downloaded from github, there is a function to import the .xlsx file to R and work with it.
+
+- Class: cmd_question
+  Output: Please type in ?read_excel into your script, to get information how the function is structured and which components need to be included.
+  CorrectAnswer: ?read_excel
+  AnswerTests: omnitest('?read_excel')
+  Hint: Simply type ?read_excel into the script and press enter.
+  
+- Class: text
+  Output: Important for this function is, that you define the data you want to import. In R, this is always done by using <-. You can use this, to define variables or whole data sets.
+
+  
+- Class: cmd_question
+  Output: Try for example to assign a variable x to the number 5. 
+  CorrectAnswer: x <- 5
+  AnswerTests: omnitest(x <- 5)
+  Hint: Type in x <- 5 and press enter to see what happens! 
+  
+- Class: text
+  Output: Very well! You should see the values in your environment section in the top right. To delete the variables in the environment, just use the broomstick to clear objects from the workspace. Please do that now.
+  
+  
+- Class: text
+  Output: The same can know be applied to our customer data, by combining the read_excel function with the definition of the data set (or with variables as we did in the example). 
+
+#Import excel file to R. 
+
+- Class: cmd_question
+  Output: So, let's know use the function read_excel on the customer data file to import it to R. The dataset should be assigned to the name customer_data. Give it a try! 
+  CorrectAnswer: customer_data <- read_excel("Customer data.xlsx")
+  AnswerTests: omnitest('customer_data <- read_excel("Customer data.xlsx")')
+  Hint: You must use the function read_excel("Customer data.xlsx"). The inserted file name must be equivalent to the name under which you saved the excel file. We told you not to rename it and also to save it in your set working directory. Please check again! To further assign the dataset to the supposed name customer_data use customer_data <- read_excel("Customer data.xlsx") and press enter.
+  
+- Class: text
+  Output: You are amazing! The first part is done. You have successfully downloaded and imported an .xlsx document into R. You should be able to access this file in your environment. 
+  
+- Class: text
+  Output: Little hint - just click the file customer_data in your environment section and a new R tab will open, where you can have a closer look at the data you imported! Or, as professionals like me and you would do it, you can also type view(customer_data) to get a closer look at it. 
+  
+- Class: text
+  Output: But, let's get back to business! The data set is now in R. Still, it has a loooot of information. In total there are 5001 lines to analyse. This input must definitely be reduced. As you can see when opening the data set plenty of rows include the value NA, which equals to missing data. This is our starting point to tidy up this file in order to work with it more easily.
+
+#Delete NA.
+
+- Class: cmd_question
+  Output: Of course, there is a function to handle, or in our case exclude, missing values in your data set. Look for help by typing ?na.omit in the script.
+  CorrectAnswer: ?na.omit
+  AnswerTests: omnitest('?na.omit')
+  Hint: Please type ?na.omit to look for further information. 
+  
+- Class: cmd_question
+  Output: Found everything you need? Go ahead and use the function na.omit() to exclude all rows with missing variables from our customer_data set. Name this new data set customer_data_clean. 
+  CorrectAnswer: customer_data_clean <- na.omit(customer_data)
+  AnswerTests: omnitest('customer_data_clean <- na.omit(customer_data)')
+  Hint: Not sure what to type? Think back. We told you before how to name your data, simply use <-. In this case, you want to name your file customer_data_clean. Thus, define it as the following customer_data_clean <- na.omit(customer_data). The first part of the function saves your new tidied data set under the name customer_data_clean in your environment. The second part deletes all rows with missing variables (NA) from the customer data.
+
+- Class: exact_question
+  Output: Can you find out how many rows are left in the customer_data_clean file?
+  CorrectAnswer: 2371
+  AnswerTests: omnitest(correctVal = 2371)
+  Hint: If everything went smooth, you should see the customer_data and the customer_data_clean in your environment. The customer_data had 5001 rows, can you also see how many the customer_data_clean has left?
+  
+- Class: text
+  Output: Wow, you really got a hang of it! In your environment you now have two data sets. One being the original, with 5001 lines of input. Our cleaned customer data only has 2371 lines. We thus eliminated a majority of data we cannot work with anyway. Amazing, right? The cool thing is, you can decide which data set you want to use when making further analysis. Endless opportunities! 
+
+#Filteroptions start
+
+- Class: text
+  Output: Data science is supposed to give insights. You already know that we try to analyse and thus get insights into customer data from a german online shop. We have already cleaned the data set and further would like to filter the data, to get even more insights about customer demographics and behavior. This is where the real fun begins! 
+  
+
+#customer_data_32 <- subset(customer_data_clean, Age == 32) 
+
+- Class: text
+  Output: Let us now start with the first exercise for you to warm up! 
+
+
