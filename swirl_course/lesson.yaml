@@ -1,0 +1,421 @@
+- Class: meta
+  Course: swirl_course_by_lisa_&_silja
+  Lesson: how_to_filter_summarise_data_by_lisa
+  Author: Lisa Marie Klasen
+  Type: Standard
+  Organization: HS Fresenius
+  Version: 2.4.5
+  
+#Introduction & motivation  
+
+- Class: text
+  Output: Hello and welcome to the data side of life :-) 
+  
+- Class: text
+  Output: Why care about data anyway you might wonder? 
+          Well, data can be transformed into information once analysed and put into context.
+          Information like this can give you insights which are crucial for evaluating and adapting in real life business! 
+          Not being able to use data sets hinders you to use all your potential.
+          
+- Class: text
+  Output: Good thing there is R!
+          We have learned the great opportunities R has to offer just recently.
+          Personally, I always thought that this is nothing an excel spreadsheet cannot do. 
+          But I was proven wrong. Once you have learned the advantages, like being able to apply the same script to as many data frames as you wish, 
+          I believe you won't see a need for excel anymore.
+
+- Class: text
+  Output: With this course, I want to show you how to tidy up and filter your data sets.
+          The best way to show you how data analysis might be beneficial in business is to work with a real life example.
+          In this case, you will work with raw customer data from a fashion online shop active in europe. 
+          
+- Class: text
+  Output: My purpose is to show you how to analyse customer insights and their buying behavior. We will focus on women in different countries in europe
+          based on the data set you will receive. 
+          An analysis like this can help you to measure, but also predict possible future developments of customer behavior 
+          and influence your course of action. 
+          Does the shopping behavior of women differ greatly in each country? Which country has the highest returned value?
+          And what is the avergae age of each female customer in the listed countries?
+          You are about to find out!
+          
+#Basics
+ 
+- Class: text
+  Output: Let's start with some basics you should always keep in mind - in this course but also in life!
+  
+- Class: text
+  Output: 1. Nobody is perfect. Be patient and do not get dismantled when you do not get everything right the first time around. 
+          There are hints for every exercise you might struggle with. 
+          
+- Class: text
+  Output: 2. Practice makes perfect. This is also my first swirl course so please be generous with me. 
+          Do not hesitate to give me feedback on any matters! 
+  
+- Class: text
+  Output: You might already be familiar with some basic functions in R, like how to execute your command.
+          Before you started this course, swirl told you the command to skip() a question. Please use this only if necessary!
+          
+- Class: text
+  Output: Also make sure to type every command or function into the script editor, not the console. 
+          This makes sure that you can easily reacess your typed commands and can have a look at them again if you need assistance.
+          
+#Part 1: Download data from github & description
+
+- Class: text
+  Output: But enough the talk! Let us start with the data import. 
+  
+- Class: text 
+  Output: You might already be familiar with github, which give you acess to a great world of data. 
+          R makes it possible to directly import data from this opensource community. 
+          You can download data direclty as an .csv document from github and import it into R. 
+  
+- Class: cmd_question
+  Output: Please install the data set you are going to work with and name it customer_data_raw using the assginment operator. 
+          Copy customer_data_raw <- read_csv("https://raw.githubusercontent.com/lisamarie0509/swirl-class/main/customer_data_raw.csv") into your script editor and run it!
+  CorrectAnswer: customer_data_raw <- read_csv("https://raw.githubusercontent.com/lisamarie0509/swirl-class/main/customer_data_raw.csv")
+  AnswerTests: omnitest(correctExpr='customer_data_raw <- read_csv("https://raw.githubusercontent.com/lisamarie0509/swirl-class/main/customer_data_raw.csv")')
+  Hint: Just use customer_data_raw <- read_csv("https://raw.githubusercontent.com/lisamarie0509/swirl-class/main/customer_data_raw.csv") and submit it.  
+
+- Class: text 
+  Output: The function read_csv imports .csv documents, either from a file path or like in this case from a connecting link.
+          Any file you import to R will be displayed in your environment. 
+
+- Class: cmd_question
+  Output: To now have a closer at the raw data from our fashion online shop you can either click the file customer_data_raw 
+          in your environment section and a new R tab will open, or, as professionals like me and you would do it, you can also type view(customer_data_raw) to get a closer look. 
+          Please do it the professional way and use the function to open the file.
+  CorrectAnswer: view(customer_data_raw) 
+  AnswerTests: omnitest(correctExpr='view(customer_data_raw)')
+  Hint: Please type view(customer_data_raw) in your script. The data set will then be shown to you. 
+
+- Class: text 
+  Output: As you can see we are looking at quite a lot of columns. 
+          The data set inlcudes age groups, title (which indicates the gender) and country of the customer.
+          Further, it gives insights about the ordered quantity and value as well as the value of returns, both in euro.
+          The last two columns contain an average of the order quantity and order value in euro.
+          
+#Part 2: Clean - exclude columns.
+
+- Class: text 
+  Output: Often data sets you receive are not exactly in the right form you need. 
+          It is necessary to refine, reorder or clean it to get to your desired outcome.
+          The dplyr package is part of the tidyverse package and allows you to filter() and select() the required data. 
+          Dplyr exectues the commands and returns a new data frame, but if you want to save your results don't forget to use the assignment operator <-. 
+
+- Class: text 
+  Output: Our aim in this course is to analyse and compare personal insights and the buying behavior of female customers in europe. 
+          For this purpose we will first exclude the last two columns of our customer_data_raw, because they are not relevant in todays analysis.
+
+- Class: cmd_question
+  Output: We thus first want to use the select() function. It can help you to narrow down your data frame by either selecting certain variables
+          respectively columns or to exclude them. In order to have a look at more details, please enter ?select. 
+  CorrectAnswer: ?select
+  AnswerTests: omnitest(correctExpr='?select')
+  Hint: Use ?select in the script to receive further information. 
+
+- Class: text 
+  Output: In our case it is easier to simply exclude columns 7 and 8 instead of selecting the first 6 columns we would like to focus on.
+          We do not want to create a new data frame, that does not includce column 7 and 8. We simply want to overwrite our frame customer_data_raw.
+          This can again be done by adding the assignment operator to the function select(customer_data_raw, -column). 
+
+- Class: cmd_question
+  Output: Your turn! Try to exlcude column 7 and 8 by using the select() function and assign it to the name customer_data_raw.
+  CorrectAnswer: customer_data_raw <- select(customer_data_raw, -7, -8)
+  AnswerTests: omnitest(correctExpr='customer_data_raw <- select(customer_data_raw, -7, -8)')
+  Hint: Copy the function select(customer_data_raw, -column) stated above. In this case, -column must be replaced by -7, -8 to remove them.
+        We also want to assign it to the name of our original data frame. Thus, place customer_data_raw <- in front of the select() function.
+        
+- Class: text 
+  Output: Excellent job! Your customer_data_raw has now been minimized to 6 variables. 
+          Still, it has a looot of information. Also some that we cannot use in our analysis.
+
+#Part 2: Clean - find missing values.
+
+- Class: text 
+  Output: Let us start with finding out if there are any missing values in our data set. 
+          If you have a look at it again, the missing values (NA = Not Available) are pretty obvious.
+          But still, in other data sets this may not be the case and we do not have the time to check 5001 rows for NA! 
+          This is our starting point to tidy up this file in order to work with it more easily.
+          
+- Class: cmd_question
+  Output: Better be prepared and use the function sum(is.na(name_of_data_frame)) to get knowledge of how many missing values exist in the raw data. 
+  CorrectAnswer: sum(is.na(customer_data_raw))
+  AnswerTests: omnitest(correctExpr='sum(is.na(customer_data_raw))')
+  Hint: Really? Just use sum(is.na(customer_data_raw)) and run the script.
+  
+- Class: exact_question
+  Output: So, how many missing values did you find in the data frame?
+  CorrectAnswer: 2666
+  AnswerTests: omnitest(correctVal = 2666)
+  Hint: You can see the correct number in your console.
+  
+#Part 2: Clean - delete missing values.
+
+- Class: text
+  Output: One of the many things that are contradictive in data analysis are missing values!
+          Every row which contains NA cannot be used in our analysis, because the data is not complete here. 
+          Let's get rid of them!
+         
+- Class: cmd_question
+  Output: Of course, there is a function to exclude missing values in your data set. 
+          Look for help by typing ?na.omit in the script.
+  CorrectAnswer: ?na.omit
+  AnswerTests: omnitest(correctExpr='?na.omit')
+  Hint: Please type ?na.omit to look for further information. 
+  
+- Class: cmd_question
+  Output: Found everything you need? Go ahead and use the function na.omit() to exclude all rows with missing 
+          variables from our customer_data_raw set. Name this new data set customer_data_clean. 
+  CorrectAnswer: customer_data_clean <- na.omit(customer_data_raw)
+  AnswerTests: omnitest(correctExpr='customer_data_clean <- na.omit(customer_data_raw)')
+  Hint: Not sure what to type? Take a step back. Simply use the assignment operator in combination with the na.omit() function.
+        In this case, you want to name your file customer_data_clean. 
+        Thus, define it as the following customer_data_clean <- na.omit(customer_data_raw). 
+
+- Class: text
+  Output: Wow, you got a hang of it! 
+         
+- Class: exact_question
+  Output: Can you also find out how many rows are left in the customer_data_clean frame?
+  CorrectAnswer: 2352
+  AnswerTests: omnitest(correctVal = 2352)
+  Hint: You can see the customer_data_raw and the customer_data_clean in your environment. 
+        The customer_data_raw had 5001 rows, can you also see how many the customer_data_clean has left?
+  
+- Class: text
+  Output: Good job! 
+          We eliminated a majority of data we cannot work with anyway. 
+          Amazing, right? The cool thing is, you can decide which data set you want to use when making further analysis. 
+          Endless opportunities! 
+
+#Part 2: Clean - rename columns.
+
+- Class: text
+  Output: Another part of cleaning your data can also be to rename columns that are confusing or might have spelling mistakes etc.
+          For example, in our case column 2 is named Title. To make it a more comprehensive, let us rename it to Gender. 
+
+- Class: cmd_question
+  Output: The dplyr package also includes a function to rename() columns. For example, rename(data_frame, "new name" = "old_name"). 
+          Please apply this to our analysis and rename Title to Gender. 
+          Save it again in your environment by assigning it to customer_data_clean. 
+  CorrectAnswer: customer_data_clean <- rename(customer_data_clean, "Gender" = "Title")
+  AnswerTests: omnitest(correctExpr='customer_data_clean <- rename(customer_data_clean, "Gender" = "Title")')
+  Hint: Have you used the assignemnt operator? Place customer_data_clean <- before the function and run it again!
+          
+#Part 3: Filteroptions start. 
+
+- Class: text
+  Output: You are on a good way! You have successfully managed to clean the customer data by 
+          removing and renaming columns as well as getting rid of missing values.
+
+- Class: text
+  Output: But to get closer to our goal of accessing insights of european female shoppers, let us filter for what is really important on this matter.
+  
+- Class: text
+  Output: R gives you several options to filter information. You can for example use the function subset() of the base package. 
+          But as we are already deep in the tidyverse we will do this by using the function filter() from the dplyr package.
+          
+- Class: cmd_question
+  Output: The filter(name_of_data_frame, column == "condition") function is used to subset a data frame, retaining all rows that meet the conditions you set in the function. 
+          To have a look at our target group, women, please now apply the function to filter for Misses in the column Gender. 
+          Save a new data frame called customer_data_women.
+  CorrectAnswer: customer_data_women <- filter(customer_data_clean, Gender == "Misses")
+  AnswerTests: omnitest(correctExpr='customer_data_women <- filter(customer_data_clean, Gender == "Misses")')
+  Hint: Simply replace the components in filter(name_of_data_frame, column == "condition"). Condition must be equal to Gender == "Misses". 
+  
+- Class: cmd_question
+  Output: Fun right? Let's do it again and check if you got it right. Can you apply the function to the new data frame to filter for all women in Germany? 
+          Save the new file as customer_data_women_germany.
+  CorrectAnswer: customer_data_women_germany <- filter(customer_data_women, Country == "Germany")
+  AnswerTests: omnitest(correctExpr='customer_data_women_germany <- filter(customer_data_women, Country == "Germany")')
+  Hint: You have done it before, so it should not be too hard...
+  
+- Class: text
+  Output: Perfect! Seems like you know how to filter after that session.
+          But let us get back to our goal. We will further work with the data frame customer_data_women. 
+          It still displays all values in an unstructured way. To get insights from this is nearly impossible.
+
+#Part 4: Summarise data.  
+
+- Class: text
+  Output: We want to get rid of this mess!
+          In dplyr the function summarise() gives you the opportunity to summarise data to fewer rows. 
+
+- Class: cmd_question
+  Output: As this is a more complex function, go to the help section and try to get familiar with this. 
+  CorrectAnswer: ?summarise
+  AnswerTests: omnitest(correctExpr='?summarise')
+  Hint: Pass ?summarise in the script to go to the help section.
+  
+- Class: text
+  Output: Under Useful functions you get an overview which functions can be combined with the summarise() function. 
+          For example it lets you calculate the mean or median of specific columns, but also to find out the minimum or maximum value.
+          What we want to do now, is to count the number of countries that are listed in our data_frame by combining summarise() with n_distinct().
+
+- Class: cmd_question
+  Output: N_distinct can efficiently count the number of unique values in targeted variables respectively columns. Try the function
+          customer_data_women %>% summarise(country_count = n_distinct(Country)) to count the number of countries included. 
+          The value country_count defines the new name of the summarised column. 
+  CorrectAnswer: customer_data_women %>% summarise(country_count = n_distinct(Country))
+  AnswerTests: omnitest(correctExpr='customer_data_women %>% summarise(country_count = n_distinct(Country))')
+  Hint: ...just copy it and press enter.
+  
+- Class: exact_question
+  Output: Can you tell from how many countries the female customer are shopping? 
+  CorrectAnswer: 4
+  AnswerTests: omnitest(correctVal = 4)
+  Hint: The answer is displayed in your console.
+
+- Class: text
+  Output: Do you see %>% in the function? Don't be confused. %>% is called a pipe operator, which is used to minimize the time investment and 
+          improve the readability of the code.
+          This is especially useful when working with a function that should be applied to several variables and values at once.
+          
+- Class: text
+  Output: By now, you know that we are looking at the shopping behavior and information about women in four countries. 
+          But we want more! Remember our guiding questions from the beginning? First, let us find out the average age of our buyers.      
+          
+- Class: cmd_question
+  Output: For this, we will use the summarise() function, but this time combine it with the function mean() to get to the average. 
+          Again, it requires the pipe operator. You must also define the column name. Try to insert all needed values into
+          name_of_data_frame %>% summarise(new_column_name = mean(column))
+  CorrectAnswer: customer_data_women %>% summarise(mean_age = mean(Age))
+  AnswerTests: omnitest(correctExpr='customer_data_women %>% summarise(mean_age = mean(Age))')
+  Hint: You can use customer_data_women %>% summarise(mean_age = mean(Age)).
+  
+- Class: text
+  Output: Success! The average age of female women across all four countries is 40,0!
+          Data like this can be beneficial for businesses to develop marketing strategies focused on their target group. 
+
+#Part 5: Summarise & group data.
+
+- Class: text
+  Output: For our analysis, however, we need an overview of all countries in order to make a decent comparison.
+          This means, we must again summarise() the variables, but also group them by country.
+
+- Class: cmd_question
+  Output: The option group_by comes with your dplyr package and lets you group by one or more variables. 
+          As grouping does not change how the data looks, but only how it acts with other dplyr functions you must use it in relation with others.
+          Try customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age)) to group the variable Country and get the mean of the 
+          column Age per country.
+  CorrectAnswer: customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age))
+  AnswerTests: omnitest(correctExpr='customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age))')
+  Hint: Copy and paste customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age)) to your script.
+  
+- Class: mult_question
+  Output: Which country has the highest average age? Please type in the name of the country.
+  AnswerChoices: Austria;Germany;Netherlands;Poland
+  CorrectAnswer: Poland
+  AnswerTests: omnitest(correctVal='Poland')
+  Hint: Choose the country which displays the highest number under mean_age. 
+
+- Class: text
+  Output: Right, Poland has on average the oldest customers indeed. 
+          The function we have used grouped all identical values in the column Country, which is why we ended up with each country only being displayed once.
+          Additionally, it summarised and calculated the mean of the age by the group we have defined, namely Country.
+  
+- Class: text
+  Output: Besides the mean of the age, for our purpose it is also required to summarise and calculate the average of the other variables per country in this data set.
+          By doing so, we can compare the purchasing behavior and performance of all countries.
+          Thanks to the pipe operator %>% it is possible to avoid having to write multiple lines of code.
+      
+- Class: cmd_question
+  Output: Still, this command is a bit complex. Thus, please use this customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age), mean_ordered_quantity = mean(Ordered_quantity), 
+          mean_ordered_value = mean(Ordered_value), mean_returned_value = mean(Returned_value)) and see how it goes.
+  CorrectAnswer: customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age), mean_ordered_quantity = mean(Ordered_quantity), mean_ordered_value = mean(Ordered_value), mean_returned_value = mean(Returned_value))
+  AnswerTests: omnitest(correctExpr='customer_data_women %>% group_by(Country) %>% summarise(mean_age = mean(Age), mean_ordered_quantity = mean(Ordered_quantity), mean_ordered_value = mean(Ordered_value), mean_returned_value = mean(Returned_value))')
+  Hint: Your next task should be obvious. 
+
+- Class: text
+  Output: Awesome! 
+          group_by(Country) is what grouped all values per country. The summarise(mean()) part is what calculated the average of each variable per group (country). 
+          This is why you now see all means of each variable per country, which makes the data set comparable.  
+          Let us also put the data into context.
+  
+- Class: text_question
+  Output: Give it a try. Which country has the highest returned_value on average?
+  CorrectAnswer: 'Germany'
+  AnswerTests: omnitest(correctVal='Germany')
+  Hint: Spelled correctly?
+  
+- Class: text_question
+  Output: Poland has the highest average ordered_quantity. True or False?
+  CorrectAnswer: 'False'
+  AnswerTests: omnitest(correctVal='False')
+  Hint: 50:50 chance.
+
+- Class: mult_question
+  Output: Which statement is True?
+  AnswerChoices: Female customer from Poland are older, but buy more than women from Austria.;Germans order more in value compared to Austria, but less than Poland.;Women from the Netherlands order the least quantities and return the least value.;None of the above.
+  CorrectAnswer: Women from the Netherlands order the least quantities and return the least value.
+  AnswerTests: omnitest(correctVal='Women from the Netherlands order the least quantities and return the least value.')
+  Hint: 
+  
+#Recap questions
+
+- Class: text
+  Output: Do you see how R made it possible to minimize the data to the real important stuff?
+          With information like this you can easily compare facts and figures. Feels good right?
+          
+- Class: text
+  Output: Let us recap the lesson with some easy questions.
+  
+- Class: mult_question
+  Output: Which function can you use to exclude columns of your data frame?
+  AnswerChoices: select();is.na();mean();exclude()
+  CorrectAnswer: select()
+  AnswerTests: omnitest(correctVal='select()')
+  Hint: Well, it is not exclude()...
+
+- Class: mult_question
+  Output: There is a function to exclude all missing values. 
+  AnswerChoices: True;False
+  CorrectAnswer: True
+  AnswerTests: omnitest(correctVal='True')
+  Hint: No hint this time. 
+
+- Class: text_question
+  Output: Nice, but can you also name it?
+  CorrectAnswer: 'na.omit()'
+  AnswerTests: omnitest(correctVal='na.omit()')
+  Hint: You could go back and look.
+
+- Class: mult_question
+  Output: What are some benefits of the pipe operator?
+  AnswerChoices: Makes data directly accessible.;Saves time & effort.;There are none.
+  CorrectAnswer: Saves time & effort.
+  AnswerTests: omnitest(correctVal='Saves time & effort.')
+  Hint: Easy peasy! Think again.
+
+#Conclusion
+
+- Class: text
+  Output: Before saying goodbye we can again look what we have achieved.
+          We can exclude columns, find and exclude missing values in data sets. 
+          We are able to rename and filter variables as well as group and summarise them. 
+          
+- Class: text
+  Output: All this effort helped to answer our guiding questions.           
+          We are now completely in the clear how the shopping behavior and personal information of women differ from country to country and can work with this accordingly!
+          Only businesses that know how to work with data and interpret them can be successfull in the long term. 
+          
+- Class: text
+  Output: You are now capable of supporting businesses with their blurry data. 
+          We hope that you think back to this swirl course when being confronted with a messy data set. 
+          
+- Class: video
+  Output: That is all I had to show you today. If you are still hungry for knowledge there are plenty of information available online.
+          I have added you a video about the several functions within the dplyr package if you are interested. 
+  VideoLink: https://www.youtube.com/watch?v=BaFkbNOaof8
+  
+
+#Outlook 
+
+- Class: text
+  Output: Further, there is also a second lesson available for you in this course. 
+          Because business is not only about getting to know your numbers, but also how you convey and illustrate them.
+          This is why the next lesson will be focused on illustrating and visualising the data you cleaned today. 
+          Hope to see you there!
+          
+- Class: text
+  Output: But...lets call it a day for now and may the pipe operator be with you!
