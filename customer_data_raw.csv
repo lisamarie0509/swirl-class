@@ -1,4 +1,4 @@
-age ,title ,country ,ordered_q ,ordered_v ,returned_v ,avg_oq , avg_ov
+age ,title ,country ,ordered_q ,ordered_v ,returned_v ,avg_ordered_q , avg_ordered_v
 ,female,germany,845,4783.76,22631.9,2.85,16.96
 ,male,,772,43493.65,15814.92,1.75,98.85
 ,female,germany,768,4596.35,2375.81,2.62,156.86
